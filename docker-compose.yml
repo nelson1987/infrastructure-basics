@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-    rabbitmq:
+    rabbit:
       image: rabbitmq:management
       container_name: rabbitmq
       environment:
@@ -10,3 +10,16 @@ services:
       ports:
         - 5672:5672
         - 15672:15672
+
+    mongo:
+      image: mongo:latest
+      container_name: mongodb
+      restart: always
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: password
+        MONGO_INITDB_DATABASE: root-db
+      ports:
+        - 27017:27017
+      volumes:
+        - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
